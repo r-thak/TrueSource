@@ -8,7 +8,8 @@ RUN apk add --no-cache \
     python3 \
     make \
     g++ \
-    libusb-dev
+    libusb-dev \
+    linux-headers
 COPY package*.json ./
 RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
