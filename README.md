@@ -1,10 +1,10 @@
 # Blockchain-Based Product Provenance (BBF)
 
-🏆 **UW-Madison Badger Build Fest Hackathon Project**
+ **UW-Madison Badger Build Fest Hackathon Project**
 
 A production-grade, secure cloud-native dApp for tracking product lifecycle on Solana blockchain with enterprise-level security monitoring.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Start the entire security stack
@@ -18,7 +18,7 @@ docker-compose up -d
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed setup instructions.
 
-## 🏗️ Architecture
+## Architecture
 
 ```
                     ┌──────────────────────────┐
@@ -46,7 +46,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed setup instructions.
     └─────────┘  └────────┘  └─────────┘  └─────────┘
 ```
 
-## 📦 Components
+## Components
 
 ### Application Layer
 - **solana-program/** - Rust-based on-chain program for product provenance
@@ -63,7 +63,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed setup instructions.
 - **grafana/** - Real-time monitoring dashboards
 - **promtail/** - Log shipping agent
 
-## 🔒 Security Features
+## Security Features
 
 ### Area 1: Pre-Deployment (Build, Test, Artifacts)
 - ✅ **Trivy** container vulnerability scanning (blocks CRITICAL/HIGH)
@@ -126,7 +126,7 @@ The security stack actively detects and prevents:
 
 View live security events in Grafana: http://localhost:3001/d/bbf-security
 
-## 📚 Documentation
+## Documentation
 
 - [Deployment Guide](./DEPLOYMENT.md) - Complete setup & testing instructions
 - [Solana Program](./solana-program/README.md) - On-chain program details
@@ -149,7 +149,7 @@ for i in {1..150}; do curl http://localhost/api/products & done
 open http://localhost:3001/d/bbf-security
 ```
 
-## 🔧 Tech Stack
+## Tech Stack
 
 **Blockchain**: Solana (Devnet)
 **Backend**: Node.js, Express, Pino
