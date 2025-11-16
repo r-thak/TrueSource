@@ -59,9 +59,6 @@ function App() {
                   <span>Local Validator</span>
                 </label>
               </div>
-              <div className="network-info">
-                Endpoint: {useValidator ? validatorUrl : 'https://api.devnet.solana.com'}
-              </div>
             </header>
             <ProductManager network={useValidator ? 'validator' : 'devnet'} />
           </div>
