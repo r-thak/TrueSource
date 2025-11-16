@@ -590,3 +590,149 @@ body {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Entries View Styles */
+.entries-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #eee4dd;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.entries-header h3 {
+  color: #423826;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.search-button,
+.clear-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+}
+
+.search-button {
+  background: #6aa84f;
+  color: white;
+}
+
+.search-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(106, 168, 79, 0.3);
+}
+
+.clear-button {
+  background: white;
+  color: #423826;
+  border: 2px solid #eee4dd;
+}
+
+.clear-button:hover:not(:disabled) {
+  background: #eee4dd;
+  transform: translateY(-2px);
+}
+
+.search-button:disabled,
+.clear-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Filters Section */
+.filters-section {
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  border: 2px solid #eee4dd;
+}
+
+.filter-group {
+  margin-bottom: 15px;
+}
+
+.filter-group:last-child {
+  margin-bottom: 0;
+}
+
+.time-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.filter-group input[type="datetime-local"] {
+  max-width: 100%;
+}
+
+/* Entries List */
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.results-count {
+  color: #423826;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  background: #d9ead3;
+  border-radius: 8px;
+  border-left: 4px solid #6aa84f;
+}
+
+/* Signature Display */
+.signature {
+  background: #f3f4f6;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.signature code {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.8rem;
+  color: #6aa84f;
+  word-break: break-all;
+  display: block;
+  background: white;
+  padding: 8px;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+/* Record Header (for Check ID view) */
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #eee4dd;
+}
+
+.record-time {
+  color: #423826;
+  font-size: 0.85rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
