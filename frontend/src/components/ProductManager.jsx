@@ -18,10 +18,14 @@ function ProductManager({ network = 'devnet' }) {
   const [existingProduct, setExistingProduct] = useState(null);
   const [originalOwner, setOriginalOwner] = useState('');
   const [recentTransactions, setRecentTransactions] = useState([]);
+  const [ownerFilter, setOwnerFilter] = useState('');
+  const [previousOwnerFilter, setPreviousOwnerFilter] = useState('');
+  const [startTimeFilter, setStartTimeFilter] = useState('');
+  const [endTimeFilter, setEndTimeFilter] = useState('');
 
   useEffect(() => {
-    if (currentView === 'recent') {
-      fetchRecentTransactions();
+    if (currentView === 'entries') {
+      fetchAllTransactions();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentView]);
@@ -156,6 +160,31 @@ function ProductManager({ network = 'devnet' }) {
     }
   };
 
+  const fetchAllTransactions = async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (ownerFilter) params.append('owner', ownerFilter);
+      if (previousOwnerFilter) params.append('previousOwner', previousOwnerFilter);
+      if (startTimeFilter) params.append('startTime', new Date(startTimeFilter).getTime());
+      if (endTimeFilter) params.append('endTime', new Date(endTimeFilter).getTime());
+
+      const response = await axios.get(`${API_URL}/products/all/transactions?${params.toString()}`);
+      setRecentTransactions(response.data.transactions);
+    } catch (error) {
+      showMessage(`Error: ${error.response?.data?.error || error.message}`, true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const clearFilters = () => {
+    setOwnerFilter('');
+    setPreviousOwnerFilter('');
+    setStartTimeFilter('');
+    setEndTimeFilter('');
+  };
+
   const renderForm = () => {
     switch (currentView) {
       case 'create':
@@ -280,7 +309,7 @@ function ProductManager({ network = 'devnet' }) {
           </div>
         );
 
-      case 'search':
+      case 'check':
         return (
           <div className="product-form">
             <div className="form-group">
@@ -288,13 +317,13 @@ function ProductManager({ network = 'devnet' }) {
               <input
                 id="productId"
                 type="text"
-                placeholder="Enter product ID to search"
+                placeholder="Enter product ID to check"
                 value={productId}
                 onChange={(e) => setProductId(e.target.value)}
               />
             </div>
             <button className="submit-button" onClick={searchProduct} disabled={loading}>
-              {loading ? 'Searching...' : 'Search Product History'}
+              {loading ? 'Checking...' : 'Check ID'}
             </button>
 
             {history && (
@@ -302,9 +331,16 @@ function ProductManager({ network = 'devnet' }) {
                 <h3>Product History</h3>
                 {history.map((record, idx) => (
                   <div key={idx} className="history-record">
-                    <strong>{record.type}</strong>
-                    <p>Owner: {record.owner}</p>
-                    <p>Time: {new Date(record.timestamp).toLocaleString()}</p>
+                    <div className="record-header">
+                      <strong>{record.type}</strong>
+                      <span className="record-time">{new Date(record.timestamp).toLocaleString()}</span>
+                    </div>
+                    <p><strong>Owner:</strong> {record.owner}</p>
+                    {record.previousOwner && <p><strong>Previous Owner:</strong> {record.previousOwner}</p>}
+                    {record.metadata && <p><strong>Details:</strong> {record.metadata}</p>}
+                    {record.signature && (
+                      <p className="signature"><strong>Transaction:</strong> <code>{record.signature}</code></p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -312,18 +348,70 @@ function ProductManager({ network = 'devnet' }) {
           </div>
         );
 
-      case 'recent':
+      case 'entries':
         return (
           <div className="product-form">
-            <div className="recent-header">
-              <h3>Recent Product Changes</h3>
-              <button className="refresh-button" onClick={fetchRecentTransactions} disabled={loading}>
-                {loading ? 'Loading...' : '🔄 Refresh'}
-              </button>
+            <div className="entries-header">
+              <h3>All Entries</h3>
+              <div className="filter-controls">
+                <button className="search-button" onClick={fetchAllTransactions} disabled={loading}>
+                  {loading ? 'Searching...' : '🔍 Search'}
+                </button>
+                <button className="clear-button" onClick={() => { clearFilters(); fetchAllTransactions(); }} disabled={loading}>
+                  Clear Filters
+                </button>
+              </div>
+            </div>
+
+            <div className="filters-section">
+              <div className="form-group filter-group">
+                <label htmlFor="ownerFilter">Owner (Public Key)</label>
+                <input
+                  id="ownerFilter"
+                  type="text"
+                  placeholder="Filter by owner address"
+                  value={ownerFilter}
+                  onChange={(e) => setOwnerFilter(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group filter-group">
+                <label htmlFor="previousOwnerFilter">Previous Owner (Public Key)</label>
+                <input
+                  id="previousOwnerFilter"
+                  type="text"
+                  placeholder="Filter by previous owner address"
+                  value={previousOwnerFilter}
+                  onChange={(e) => setPreviousOwnerFilter(e.target.value)}
+                />
+              </div>
+
+              <div className="time-filters">
+                <div className="form-group filter-group">
+                  <label htmlFor="startTimeFilter">Start Time</label>
+                  <input
+                    id="startTimeFilter"
+                    type="datetime-local"
+                    value={startTimeFilter}
+                    onChange={(e) => setStartTimeFilter(e.target.value)}
+                  />
+                </div>
+
+                <div className="form-group filter-group">
+                  <label htmlFor="endTimeFilter">End Time</label>
+                  <input
+                    id="endTimeFilter"
+                    type="datetime-local"
+                    value={endTimeFilter}
+                    onChange={(e) => setEndTimeFilter(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
 
             {recentTransactions.length > 0 ? (
-              <div className="recent-transactions">
+              <div className="entries-list">
+                <p className="results-count">Found {recentTransactions.length} entries</p>
                 {recentTransactions.map((record, idx) => (
                   <div key={idx} className="transaction-card">
                     <div className="transaction-header">
@@ -337,13 +425,16 @@ function ProductManager({ network = 'devnet' }) {
                       <p><strong>Owner:</strong> {record.owner}</p>
                       {record.metadata && <p><strong>Details:</strong> {record.metadata}</p>}
                       {record.previousOwner && <p><strong>Previous Owner:</strong> {record.previousOwner}</p>}
+                      {record.signature && (
+                        <p className="signature"><strong>Transaction:</strong> <code>{record.signature}</code></p>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
               <div className="no-transactions">
-                <p>No recent transactions found. Create a product to get started!</p>
+                <p>No entries found. {ownerFilter || previousOwnerFilter || startTimeFilter || endTimeFilter ? 'Try adjusting your filters.' : 'Create a product to get started!'}</p>
               </div>
             )}
           </div>
@@ -393,16 +484,16 @@ function ProductManager({ network = 'devnet' }) {
             Record Repair
           </button>
           <button
-            className={`view-tab ${currentView === 'search' ? 'active' : ''}`}
-            onClick={() => setCurrentView('search')}
+            className={`view-tab ${currentView === 'check' ? 'active' : ''}`}
+            onClick={() => setCurrentView('check')}
           >
-            Search History
+            Check ID
           </button>
           <button
-            className={`view-tab ${currentView === 'recent' ? 'active' : ''}`}
-            onClick={() => setCurrentView('recent')}
+            className={`view-tab ${currentView === 'entries' ? 'active' : ''}`}
+            onClick={() => setCurrentView('entries')}
           >
-            Recent Entries
+            Entries
           </button>
         </div>
 

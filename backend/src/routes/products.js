@@ -171,6 +171,42 @@ router.get('/recent/transactions', async (req, res, next) => {
   }
 });
 
+// Get all transactions with optional filters (must be before /:productId/history to avoid route collision)
+router.get('/all/transactions', async (req, res, next) => {
+  try {
+    const filters = {
+      owner: req.query.owner,
+      previousOwner: req.query.previousOwner,
+      startTime: req.query.startTime,
+      endTime: req.query.endTime
+    };
+
+    logger.info({
+      type: 'all_transactions_request',
+      filters
+    });
+
+    const transactions = await solanaService.getAllTransactions(filters);
+
+    logger.info({
+      type: 'all_transactions_retrieved',
+      count: transactions.length
+    });
+
+    res.json({
+      success: true,
+      transactions,
+      filters
+    });
+  } catch (error) {
+    logger.error({
+      type: 'all_transactions_error',
+      error: error.message
+    });
+    next(error);
+  }
+});
+
 // Get product history
 router.get('/:productId/history', async (req, res, next) => {
   try {
