@@ -1,0 +1,81 @@
+# Git and version control
+.git
+.gitignore
+.gitattributes
+
+# Node modules (will be installed during build)
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs (will be generated during build)
+dist
+build
+.vite
+coverage
+.nyc_output
+
+# Testing
+test
+tests
+__tests__
+*.test.js
+*.test.jsx
+*.spec.js
+*.spec.jsx
+jest.config.js
+vitest.config.js
+
+# Documentation
+*.md
+README.md
+CHANGELOG.md
+LICENSE
+docs
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment files (use .env.example as template)
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs
+
+# Docker files
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+Jenkinsfile
+
+# Other service directories (not needed for frontend build)
+../backend
+../nginx
+../opa
+../falco
+../grafana
+../loki
+../solana-program
+
+# Temporary files
+tmp
+temp
+*.tmp
+
+# Development files
+.eslintcache

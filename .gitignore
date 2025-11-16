@@ -36,9 +36,6 @@ test-ledger/
 keypairs/
 *.so
 
-# Docker
-.dockerignore
-
 # Coverage
 coverage/
 .nyc_output/
