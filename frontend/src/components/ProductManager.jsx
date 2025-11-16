@@ -108,11 +108,11 @@ function ProductManager({ network = 'devnet' }) {
         return (
           <div className="product-form">
             <div className="form-group">
-              <label htmlFor="productId">Product ID (Serial Number)</label>
+              <label htmlFor="productId">Product ID</label>
               <input
                 id="productId"
                 type="text"
-                placeholder="Enter product serial number"
+                placeholder="Enter product ID"
                 value={productId}
                 onChange={(e) => setProductId(e.target.value)}
               />
@@ -230,16 +230,6 @@ function ProductManager({ network = 'devnet' }) {
     <div className="product-manager">
       <div className="wallet-section">
         <WalletMultiButton />
-        <div className="connection-info">
-          <p className="network-status">
-            Network: <span className="network-badge">{network.toUpperCase()}</span>
-          </p>
-          {connected && (
-            <p className="wallet-address">
-              Wallet Connected
-            </p>
-          )}
-        </div>
       </div>
 
       {message && (

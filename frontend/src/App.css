@@ -11,13 +11,13 @@ body {
 .App {
   min-height: 100vh;
   background-color: #eee4dd;
-  padding: 20px;
+  padding: 10px;
 }
 
 .App-header {
   text-align: center;
   color: #423826;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .App-header h1 {
@@ -63,7 +63,7 @@ body {
 .network-selector label:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(66, 56, 38, 0.15);
-  border-color: #A66680;
+  border-color: #6aa84f;
 }
 
 .network-selector input[type="radio"] {
@@ -77,7 +77,7 @@ body {
 }
 
 .network-selector label:has(input:checked) {
-  background: linear-gradient(135deg, #6aa84f 0%, #A66680 100%);
+  background: #6aa84f;
   border-color: #6aa84f;
   color: white;
   box-shadow: 0 6px 20px rgba(106, 168, 79, 0.3);
@@ -114,13 +114,13 @@ body {
 }
 
 .product-manager {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
 .wallet-section {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .connection-info {
@@ -136,7 +136,7 @@ body {
 
 .network-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #6aa84f 0%, #A66680 100%);
+  background: #6aa84f;
   color: white;
   padding: 6px 16px;
   border-radius: 20px;
@@ -156,6 +156,17 @@ body {
   padding: 8px 20px;
   border-radius: 25px;
   border: 2px solid #C7B5A9;
+}
+
+/* Override wallet adapter button to display "Phantom" instead of wallet address */
+.wallet-adapter-button-trigger {
+  font-size: 0 !important;
+}
+
+.wallet-adapter-button-trigger::after {
+  content: 'Phantom';
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .message {
@@ -186,7 +197,7 @@ body {
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 8px 24px rgba(66, 56, 38, 0.15);
-  max-width: 800px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -218,7 +229,7 @@ body {
 }
 
 .view-tab.active {
-  background: linear-gradient(135deg, #6aa84f 0%, #A66680 100%);
+  background: #6aa84f;
   color: white;
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(106, 168, 79, 0.3);
@@ -231,7 +242,7 @@ body {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(135deg, #6aa84f 0%, #A66680 100%);
+  background: #6aa84f;
 }
 
 .product-form {
@@ -281,7 +292,7 @@ body {
 .submit-button {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #6aa84f 0%, #A66680 100%);
+  background: #6aa84f;
   color: white;
   border: none;
   border-radius: 12px;
@@ -333,7 +344,7 @@ body {
 }
 
 .history-record strong {
-  color: #A66680;
+  color: #6aa84f;
   display: block;
   margin-bottom: 10px;
   font-weight: 700;
@@ -362,7 +373,7 @@ body {
 }
 
 .action-card h2 {
-  color: #A66680;
+  color: #6aa84f;
   margin-bottom: 20px;
   font-size: 1.5rem;
   font-weight: 700;
@@ -388,7 +399,7 @@ body {
 .action-card button {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #6aa84f 0%, #A66680 100%);
+  background: #6aa84f;
   color: white;
   border: none;
   border-radius: 8px;
