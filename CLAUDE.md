@@ -24,27 +24,28 @@ Similar to CarFax but for consumer electronics, bikes, and high-value goods.
 
 ```
 bbf/
-├── backend/                    # Node.js REST API (418 LOC)
+├── backend/                    # Node.js REST API (706 LOC)
 │   ├── src/
 │   │   ├── index.js            # Express app (101 lines) - Main entry point
 │   │   ├── logger.js           # Pino logging (23 lines)
 │   │   ├── loki-transport.js   # Loki integration (35 lines)
 │   │   ├── routes/
-│   │   │   └── products.js     # API routes (177 lines) - 5 endpoints
+│   │   │   └── products.js     # API routes (243 lines) - 8 endpoints
 │   │   └── services/
-│   │       └── solana.js       # Blockchain service (82 lines)
+│   │       └── solana.js       # Blockchain service (304 lines)
 │   ├── Dockerfile              # Multi-stage production build
 │   ├── Dockerfile.minimal      # CI/CD testing build
 │   └── package.json            # Node.js 20+, Express 5.1
 │
-├── frontend/                   # React SPA (501 LOC)
+├── frontend/                   # React SPA (1347 LOC)
 │   ├── src/
 │   │   ├── main.jsx            # React entry (10 lines)
 │   │   ├── App.jsx             # Wallet setup + network selector (71 lines)
-│   │   ├── App.css             # Component styling (192 lines)
+│   │   ├── App.css             # Component styling (738 lines)
+│   │   ├── index.css           # Global styles (18 lines)
 │   │   └── components/
-│   │       └── ProductManager.jsx  # Main UI (216 lines)
-│   ├── index.html              # HTML entry with CSP headers (12 lines)
+│   │       └── ProductManager.jsx  # Main UI (510 lines)
+│   ├── index.html              # HTML entry with CSP headers (15 lines)
 │   ├── nginx.conf              # Frontend NGINX configuration
 │   ├── Dockerfile              # Multi-stage Nginx build
 │   ├── Dockerfile.minimal      # CI/CD testing build
@@ -87,13 +88,13 @@ bbf/
 │
 ├── docker-compose.yml          # 8-service orchestration
 ├── start.sh                    # Helper startup script
-├── DEPLOYMENT.md               # Deployment guide (72 lines)
-├── REPOSITORY_DOCUMENTATION.md # Comprehensive technical docs (797 lines)
+├── DEPLOYMENT.md               # Deployment guide (32 lines)
+├── REPOSITORY_DOCUMENTATION.md # Comprehensive technical docs (794 lines)
 ├── design.md                   # Architecture & design
-├── CLAUDE.md                   # AI assistant guide (910 lines)
+├── CLAUDE.md                   # AI assistant guide (944 lines)
 └── README.md                   # Main project docs
 
-Total: 919 lines of application code + 1000+ lines of configuration
+Total: 2300+ lines of application code + 1000+ lines of configuration
 ```
 
 ---
@@ -184,16 +185,19 @@ npm test
 
 **Key Files**:
 - `src/index.js:1-101` - Express app setup, middleware, routes
-- `src/routes/products.js:1-177` - API endpoint implementations
-- `src/services/solana.js:1-82` - Solana blockchain interactions
+- `src/routes/products.js:1-243` - API endpoint implementations
+- `src/services/solana.js:1-304` - Solana blockchain interactions
 - `src/logger.js:1-23` - Structured logging configuration
 
-**API Endpoints**:
+**API Endpoints** (8 total):
 - `POST /api/products` - Create product (manufacturer)
 - `POST /api/products/:productId/transfer` - Transfer ownership
 - `POST /api/products/:productId/repair` - Record repair
+- `GET /api/products/recent/transactions` - Get recent transactions (with pagination)
+- `GET /api/products/all/transactions` - Get all transactions (with filtering)
 - `GET /api/products/:productId/history` - Get product history
 - `GET /health` - Health check
+- Plus error handling middleware
 
 ### Frontend Development
 
@@ -220,9 +224,10 @@ npm run lint
 **Key Files**:
 - `src/main.jsx:1-10` - React app entry point
 - `src/App.jsx:1-71` - Wallet adapter setup + network selector UI
-- `src/App.css:1-192` - Application styling (network selector, cards, badges, etc.)
-- `src/components/ProductManager.jsx:1-216` - Main UI component
-- `index.html:1-12` - HTML entry with Content Security Policy headers
+- `src/App.css:1-738` - Application styling (network selector, cards, badges, tables, filters, etc.)
+- `src/index.css:1-18` - Global styles
+- `src/components/ProductManager.jsx:1-510` - Main UI component with transaction history display
+- `index.html:1-15` - HTML entry with Content Security Policy headers
 - `nginx.conf:1-50` - Frontend NGINX server configuration
 
 **Environment Variables**:
@@ -877,22 +882,42 @@ docker system prune -a              # Clean up all unused Docker resources
 
 ### Recent Changes
 
-**2025-11-16 (Latest)**:
+**2025-11-16 (Latest Update)**:
+- **Major Feature Additions**:
+  - Replaced mock signatures with real Solana transactions (commit f3496ff)
+  - Added ownership validation to prevent unauthorized transfers and repairs (commit 21d7ae6)
+  - Implemented transaction history display with filtering and search capabilities
+  - Added recent transactions endpoint with pagination support
+  - Added all transactions endpoint with advanced filtering (owner, time range, etc.)
+  - Enhanced UI with comprehensive transaction management and viewing capabilities
+
+- **Code Expansion**:
+  - Backend grew from 418 to 706 lines of code (69% increase)
+  - Frontend grew from 501 to 1347 lines of code (169% increase)
+  - API endpoints increased from 5 to 8
+  - Added real blockchain integration with signature verification
+
 - **Security Improvements**:
   - Created custom nginx/Dockerfile with proper ModSecurity permissions fixes
   - Fixed Falco configuration and custom rules to eliminate startup errors
   - Enhanced NGINX security headers with comprehensive CSP policy
   - Improved container security with proper file ownership and permissions
+  - Added ownership validation for all transfer and repair operations
+
 - **Documentation Updates**:
-  - Streamlined DEPLOYMENT.md (reduced from 340+ to 72 lines)
-  - Updated CLAUDE.md with accurate file counts and recent security fixes
+  - Streamlined DEPLOYMENT.md (reduced from 340+ to 32 lines)
+  - Updated CLAUDE.md with accurate file counts reflecting new features
+  - Updated REPOSITORY_DOCUMENTATION.md (794 lines)
   - Added missing file references (nginx/Dockerfile, frontend/nginx.conf)
+
 - **Frontend Enhancements**:
   - Added local Solana validator support with runtime network switching
   - Removed explicit Phantom wallet adapter (now auto-discovered as Standard Wallet)
   - Fixed Content Security Policy to allow API requests to localhost:3000 and localhost:8899
   - Added network selector UI with radio buttons in header
-  - Enhanced App.css with styling for network selector and status badges
+  - Enhanced App.css with extensive styling for transaction tables, filters, and status badges
+  - Added transaction viewing with filtering by owner, date range, and product ID
+  - Improved product search and validation UI
 
 ---
 
