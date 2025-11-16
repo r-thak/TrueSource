@@ -3,6 +3,9 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Upgrade all packages to latest security patches
+RUN apk update && apk upgrade --no-cache
+
 # Install dependencies
 RUN apk add --no-cache \
     python3 \
@@ -20,6 +23,9 @@ RUN npm run build
 
 # Production stage - Nginx Alpine for serving static files
 FROM nginx:alpine
+
+# Upgrade all packages to latest security patches
+RUN apk update && apk upgrade --no-cache
 
 # Add security: Remove default nginx user and add custom user
 RUN addgroup -g 1001 -S frontend && \

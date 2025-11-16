@@ -3,6 +3,9 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Upgrade all packages to latest security patches
+RUN apk update && apk upgrade --no-cache
+
 # Install dependencies
 COPY package*.json ./
 RUN if [ -f package-lock.json ]; then npm ci --only=production; else npm install --production; fi
@@ -12,6 +15,9 @@ COPY . .
 
 # Production stage
 FROM node:20-alpine
+
+# Upgrade all packages to latest security patches
+RUN apk update && apk upgrade --no-cache
 
 # Add security: Run as non-root user
 RUN addgroup -g 1001 -S nodejs && \

@@ -2,6 +2,9 @@
 # This ensures the pipeline can build even without full application code
 FROM node:20-alpine
 
+# Upgrade all packages to latest security patches
+RUN apk update && apk upgrade --no-cache
+
 WORKDIR /app
 
 # Create minimal package.json if it doesn't exist

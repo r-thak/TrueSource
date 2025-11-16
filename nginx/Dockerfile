@@ -1,7 +1,10 @@
 FROM owasp/modsecurity-crs:nginx-alpine
 
-# Remove default templates to prevent entrypoint from overwriting our custom configs
+# Upgrade all packages to latest security patches
 USER root
+RUN apk update && apk upgrade --no-cache
+
+# Remove default templates to prevent entrypoint from overwriting our custom configs
 RUN rm -rf /etc/nginx/templates/*
 
 

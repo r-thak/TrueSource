@@ -2,6 +2,9 @@
 # This ensures the pipeline can build even without full application code
 FROM node:20-alpine AS builder
 
+# Upgrade all packages to latest security patches
+RUN apk update && apk upgrade --no-cache
+
 WORKDIR /app
 
 # Create minimal package.json if it doesn't exist
@@ -29,6 +32,9 @@ RUN npm run build || (mkdir -p dist && echo '<!DOCTYPE html><html><body>BBF Fron
 
 # Production stage
 FROM nginx:alpine
+
+# Upgrade all packages to latest security patches
+RUN apk update && apk upgrade --no-cache
 
 # Security: Add non-root user
 RUN addgroup -g 1001 -S frontend && \
