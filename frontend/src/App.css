@@ -10,7 +10,7 @@ body {
 
 .App {
   min-height: 100vh;
-  background-color: #eee4dd;
+  background-color: #d9ead3;
   padding: 10px;
 }
 
@@ -55,7 +55,7 @@ body {
   user-select: none;
   padding: 12px 28px;
   background: white;
-  border: 3px solid #C7B5A9;
+  border: 3px solid #eee4dd;
   border-radius: 50px;
   font-weight: 500;
   color: #423826;
@@ -111,7 +111,7 @@ body {
   background: white;
   padding: 8px 16px;
   border-radius: 20px;
-  border: 2px solid #C7B5A9;
+  border: 2px solid #eee4dd;
   margin-top: 10px;
   width: 100%;
   text-align: center;
@@ -132,7 +132,7 @@ body {
   background: white;
   padding: 12px 20px;
   border-radius: 25px;
-  border: 2px solid #C7B5A9;
+  border: 2px solid #eee4dd;
   display: inline-block;
   max-width: 90%;
   overflow: hidden;
@@ -186,7 +186,7 @@ body {
   display: inline-block;
   padding: 8px 20px;
   border-radius: 25px;
-  border: 2px solid #C7B5A9;
+  border: 2px solid #eee4dd;
 }
 
 /* Override wallet adapter button to display "Phantom" instead of wallet address */
@@ -236,7 +236,7 @@ body {
   display: flex;
   gap: 12px;
   margin-bottom: 30px;
-  border-bottom: 3px solid #C7B5A9;
+  border-bottom: 3px solid #eee4dd;
   padding-bottom: 15px;
   flex-wrap: wrap;
 }
@@ -256,7 +256,7 @@ body {
 }
 
 .view-tab:hover {
-  background: #eee4dd;
+  background: #d9ead3;
 }
 
 .view-tab.active {
@@ -299,7 +299,7 @@ body {
   width: 100%;
   max-width: 600px;
   padding: 14px;
-  border: 2px solid #C7B5A9;
+  border: 2px solid #eee4dd;
   border-radius: 10px;
   font-size: 1rem;
   font-family: 'Roboto', sans-serif;
@@ -384,7 +384,7 @@ body {
 .history {
   margin-top: 30px;
   padding-top: 25px;
-  border-top: 3px solid #C7B5A9;
+  border-top: 3px solid #eee4dd;
 }
 
 .history h3 {
@@ -395,7 +395,7 @@ body {
 }
 
 .history-record {
-  background: #eee4dd;
+  background: #d9ead3;
   padding: 18px;
   border-radius: 12px;
   margin-bottom: 12px;
@@ -430,7 +430,7 @@ body {
   align-items: center;
   margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 3px solid #C7B5A9;
+  border-bottom: 3px solid #eee4dd;
 }
 
 .recent-header h3 {
@@ -470,7 +470,7 @@ body {
 }
 
 .transaction-card {
-  background: #eee4dd;
+  background: #d9ead3;
   border-radius: 12px;
   padding: 18px;
   border-left: 4px solid #6aa84f;
@@ -488,7 +488,7 @@ body {
   align-items: center;
   margin-bottom: 12px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #C7B5A9;
+  border-bottom: 2px solid #eee4dd;
 }
 
 .transaction-type {
@@ -556,7 +556,7 @@ body {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
-  border: 2px solid #C7B5A9;
+  border: 2px solid #eee4dd;
   border-radius: 8px;
   font-size: 1rem;
   font-family: 'Roboto', sans-serif;
