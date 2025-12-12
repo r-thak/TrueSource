@@ -1,6 +1,4 @@
-# Blockchain-Based Product Provenance (BBF)
-
-A production-grade, secure cloud-native dApp for tracking product lifecycle on Solana blockchain with security monitoring.
+A cloud-native dApp for tracking product lifecycle on Solana blockchain with security monitoring.
 Similar to CarFax but for consumer electronics, bikes, and high-value goods.
 
 ## Quick Start
@@ -14,8 +12,6 @@ docker-compose up -d
 # - API: http://localhost:3000
 # - Grafana: http://localhost:3001 (admin/admin123)
 ```
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed setup instructions.
 
 ## Components
 
@@ -57,7 +53,6 @@ View live security events in Grafana: http://localhost:3001/d/bbf-security
 
 ## Documentation
 
-- [Deployment Guide](./DEPLOYMENT.md) - Complete setup & testing instructions
 - [Solana Program](./solana-program/README.md) - On-chain program details
 - [Backend API](./backend/README.md) - REST API documentation
 - [Frontend](./frontend/README.md) - Web UI setup
